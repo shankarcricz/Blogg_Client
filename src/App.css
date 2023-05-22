@@ -1,38 +1,47 @@
-.App {
+
+:root {
+  --themeColor: teal;
+}
+
+
+* {
+  font-family: 'Open Sans';
+}
+
+
+.form1_email, .form1_password, .form2_name, .form2_email, .form2_password, .form2_password_cnfrm {
+  width: 100%;
+  border: 0;
   text-align: center;
+  outline: none;
+  border-bottom: 2px solid var(--themeColor);
+  color: var(--themeColor)
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.form1_email:focus, .form1_password:focus, .form2_name:focus, .form2_email:focus, .form2_password:focus, .form2_password_cnfrm:focus {
+  animation: 1s linear ease;
+  border-bottom: 2px solid black;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.avatar {
+  cursor: "pointer";
+  border: 2px solid var(--themeColor)
+}
+.popover-header {
+  color: var(--themeColor);
+  font-weight: "bolder";
+}
+.blogs {
+  animation:fade 1s ease-in;
+  
+}
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.fixed {
+  position: fixed !important;
+  top : 0;
 }

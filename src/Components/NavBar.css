@@ -1,0 +1,33 @@
+:root {
+    --theme-Colornav : teal
+}
+
+.sign-in, .sign-up, .write {
+    border : 0;
+    background: none;
+    border-radius: 15px;
+    margin-right: 20px;
+    color: var(--theme-Colornav);
+}
+
+.write:hover,.sign-in:hover, .sign-up:hover {
+    box-shadow: 5px 5px ;
+}
+.avatar {
+    cursor: pointer;
+}
+#search {
+    border-bottom: 2px solid var(--theme-Colornav);
+    font-weight: bold;
+}
+/* .popover_card {
+    animation : lot 400ms ease-in
+}
+@keyframes lot {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+} */

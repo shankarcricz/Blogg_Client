@@ -1,0 +1,8 @@
+:root {
+    --themeColor : 'teal'
+}
+
+.readBtn {
+    background: var(--themeColor);
+    color: 'white'
+ }
