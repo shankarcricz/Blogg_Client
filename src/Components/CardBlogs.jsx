@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 import { FavoriteBorderOutlined, FavoriteRounded } from "@mui/icons-material";
 
 export default function CardBlogs({ blog }) {
-  const BE_URL = 'https://bloggserver.onrender.com/'
   const month = [
     "January",
     "February",
@@ -40,7 +39,7 @@ export default function CardBlogs({ blog }) {
               sx={{ width: 38, height: 38 }}
               style={{border : '2px solid grey'}}
               alt={blog.createdUser?.name}
-              src={BE_URL+`${blog.createdUser?.photo}`}
+              src={blog.createdUser?.photo}
             />
           }
           title={blog.createdUser?.name}
@@ -88,7 +87,7 @@ export default function CardBlogs({ blog }) {
             height={100}
             style={{objectFit:'contain', maxHeight:'100px', marginTop:'20px'}}
             alt="blogPhoto"
-            image={BE_URL + `${blog.photo}`}
+            image={blog.photo}
           />
         </div>
       </div>

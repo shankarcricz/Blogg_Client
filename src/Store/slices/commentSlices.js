@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
-const BE_URL = "https://bloggserver.onrender.com"
+const BE_URL = "http://localhost:3001"
 
 export const fetchComments = createAsyncThunk('comments', async (blog_id) => {
     try{

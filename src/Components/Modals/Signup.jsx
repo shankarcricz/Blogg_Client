@@ -4,11 +4,12 @@ import { signup, updatePhoto } from "../../Store/slices/UserSlice";
 import Loader from "./Loader";
 import { Button, Spinner } from "react-bootstrap";
 import { MDBTabsPane, MDBBtn, MDBIcon, MDBCheckbox } from "mdb-react-ui-kit";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 import { Image, Verified } from "@mui/icons-material";
 
 const Signup = ({ justifyActive, show, handleClose, loading, error }) => {
+
   const dispatch = useDispatch();
   const picRef = useRef();
   const [name, setName] = useState("");
@@ -20,7 +21,7 @@ const Signup = ({ justifyActive, show, handleClose, loading, error }) => {
   const [origImage, setOriginalImage] = useState(null);
   const handleSignup = () => {
     if (!name || !email_s || !password_s || !passwordConfirm) return;
-    setSpinner(true);
+   
     dispatch(
       signup({
         name,
@@ -31,9 +32,7 @@ const Signup = ({ justifyActive, show, handleClose, loading, error }) => {
       })
     );
     
-    setTimeout(() => {
-      setSpinner(false);
-    }, 2000);
+ 
   };
   const handleFileUpload = (e) => {
     if(e.target.files[0].type.startsWith('image')) {
@@ -180,7 +179,7 @@ const Signup = ({ justifyActive, show, handleClose, loading, error }) => {
         />
       </div>
 
-      {spinner ? (
+      {loading ? (
         <Button variant="primary" disabled className="mb-4 w-100">
           <Spinner
             as="span"

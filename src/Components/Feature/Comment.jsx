@@ -4,11 +4,10 @@ import { Avatar } from "@mui/material";
 import { FavoriteOutlined, Reply, ThumbUpOffAlt, ThumbsUpDown } from "@mui/icons-material";
 
 export default function Comment({comment}) {
-  const BE_URL = "https://bloggserver.onrender.com/"
   return (
     <div className="card mb-3">
         <div className="card-header">
-        <Avatar src={BE_URL + `${comment?.user?.photo}`}/>
+        <Avatar src={comment?.user?.photo}/>
             <div className="row">
                 <span className="col">{comment?.user?.name}</span>
                 <span className="col">{new Date(comment?.createdAt).getFullYear() + ' - ' + new Date(comment?.createdAt).getMonth() + ' - ' + new Date(comment?.createdAt).getDate()}</span>            

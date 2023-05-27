@@ -1,6 +1,12 @@
 :root {
     --theme-Colornav : teal
 }
+#load-avatar {
+    border: 2px solid pink;
+    height: 10px;
+    width: 10px;
+    transition: ease-in 5s;
+}
 
 .sign-in, .sign-up, .write {
     border : 0;

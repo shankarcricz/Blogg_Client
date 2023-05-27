@@ -26,7 +26,6 @@ import LoginChecker from "./Feature/LoginChecker";
 
 
 function BlogComponent() {
-  const BE_URL = "https://bloggserver.onrender.com/"
   const dispatch = useDispatch();
   const { blogPost, loading, error } = useSelector((state) => state.blogs);
   const [follow, setFollow] = useState(false);
@@ -76,7 +75,7 @@ function BlogComponent() {
             <Breadcrumbs separator={<Label/>} aria-label="breadcrumb">
               <Avatar
                 sizes="large"
-                src={BE_URL+ blog?.createdUser?.photo}
+                src={blog?.createdUser?.photo}
               ></Avatar>
               <span>{blog?.createdUser?.name || "unknown"}</span>
               <span>{new Date(blog?.createdAt).getFullYear()}</span>
@@ -128,7 +127,7 @@ function BlogComponent() {
           <div className="row mt-3">
             <img
               style={{objectFit: 'scale-down',aspectRatio: 2/1}}
-              src={BE_URL + `${blog?.photo}`}
+              src={blog?.photo}
               alt="img"
             ></img>
           </div>

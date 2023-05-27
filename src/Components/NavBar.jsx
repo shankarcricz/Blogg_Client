@@ -4,7 +4,7 @@ import "./NavBar.css";
 import CreateIcon from "@mui/icons-material/Create";
 import { Avatar, TextField } from "@mui/material";
 import { useRef, useState } from "react";
-import { CloseButton } from "react-bootstrap";
+import { CloseButton, Spinner } from "react-bootstrap";
 import { OverlayTrigger } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { Popover } from "react-bootstrap";
@@ -16,14 +16,15 @@ import { updatePhoto } from "../Store/slices/UserSlice";
 import { Link } from "react-router-dom";
 import { fetchBlogsBySearch } from "../Store/slices/blogSlices";
 import { DarkMode, DarkModeOutlined, LightMode, Send } from "@mui/icons-material";
+import DotLoader from "./utils/DotLoader";
 
 function NavBar() {
-  const BE_URL = "https://bloggserver.onrender.com/"
   const { isLoggedIn, loading } = useSelector((state) => state.user);
   const [term, setTerm] = useState("");
   const [show, setShow] = useState(false);
   const picRef = useRef();
   const dispatch = useDispatch();
+
   const handleClose = () => {
     setShow((prev) => !prev);
   };
@@ -39,7 +40,7 @@ function NavBar() {
 
   const currentUser_name = sessionStorage.getItem("currentUser_name");
   const currentUser_photo =
-    BE_URL + sessionStorage.getItem("currentUser_photo");
+    sessionStorage.getItem("currentUser_photo");
 
   return (
     <Navbar className="navbar">
@@ -131,11 +132,15 @@ function NavBar() {
                 </Popover>
               }
             >
+              
               <Avatar
                 className="avatar"
+                id= {loading ? 'load-avatar' : ''}
                 size="large"
                 src={currentUser_photo}
               />
+              
+             
             </OverlayTrigger>
           )}
         </Navbar.Collapse>
