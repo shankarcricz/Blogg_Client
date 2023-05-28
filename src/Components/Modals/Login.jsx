@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import ReactDOM from "react-dom";
 import React from "react";
@@ -20,6 +20,9 @@ import { Dispatch } from "react";
 import  { LoginFn } from "../../Store/slices/UserSlice";
 import Signup from "./Signup";
 import Loader from "./Loader";
+import { Link } from "react-router-dom";
+import ForgotPassword from "../ForgotPassword";
+import { ArrowBackIosNew, ArrowBackIosNewSharp } from "@mui/icons-material";
 
 function Login({ show, handleClose }) {
   const { isLoggedIn, loading, error } = useSelector((state) => state.user);
@@ -29,6 +32,8 @@ function Login({ show, handleClose }) {
   const [email_l, setEmail_l] = useState("");
   const [password_l, setPassword_l] = useState("");
   const [spinner, setSpinner] = useState(false);
+  const [forgotPassword, setForgotPassword] = useState(false)
+
 
   if (!show) return null;
   const handleJustifyClick = (value) => {
@@ -66,11 +71,12 @@ function Login({ show, handleClose }) {
             <Modal.Title className="text-light">Welcome!</Modal.Title>
           </Modal.Header>
           {
-            isLoggedIn ? 
+             isLoggedIn ? 
             (<Modal.Body>
               <h5 className="text-success text-center">Yay! logged in successfully</h5>
             </Modal.Body>) :
-            ( <Modal.Body>
+            
+            !forgotPassword && ( <Modal.Body>
               <MDBContainer className="d-flex flex-column w-100">
                 <MDBTabs
                   pills
@@ -164,7 +170,7 @@ function Login({ show, handleClose }) {
                         id="flexCheckDefault"
                         label="Remember me"
                       />
-                      <a href="!#">Forgot password?</a>
+                      <Link onClick={() => setForgotPassword(true)}>Forgot Password?</Link>
                     </div>
                     {spinner ? (
                       <Button variant="primary" disabled className="mb-4 w-100">
@@ -202,6 +208,17 @@ function Login({ show, handleClose }) {
                 </MDBTabsContent>
               </MDBContainer>
             </Modal.Body>)
+          }
+          {
+            forgotPassword && (
+              <Modal.Body>
+                <ForgotPassword/>
+                <div className="m-2" onClick={() => setForgotPassword(false)} style={{cursor:'pointer', textAlign:'center'}}>
+                  <button className="btn btn-success">
+                  <ArrowBackIosNew/>Go Back</button>
+                  </div>
+              </Modal.Body>
+            )
           }
         </Modal>
     </>,

@@ -1,11 +1,12 @@
 import {
   Button,
+  ButtonBase,
   Input,
   Select,
   TextField,
   TextareaAutosize,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Alert, Form } from "react-bootstrap";
 import "./WriteComponent.css";
 import { CFormTextarea } from "@coreui/react";
@@ -16,6 +17,8 @@ import WriteLoader from "./utils/WriteLoader";
 import {toast} from 'react-toastify'
 import Cookies from "js-cookie";
 import LoginChecker from "./Feature/LoginChecker";
+import JoditEditor from "jodit-react";
+import { PhotoCamera, UploadFile } from "@mui/icons-material";
 
 function WriteComponent() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -75,21 +78,24 @@ const gArr = [
   
 
   const dispatch = useDispatch();
-
-  const { loading } = useSelector((state) => state.blogs);
+  const editor = useRef(null);
+  const [content, setContent] = useState('')
+  const { loading, submitted } = useSelector((state) => state.blogs);
   if(loading) {
-    setTimeout(() => {
-      window.location.href='/'
-      //toast here
-      toast('Published!', {
-        type: 'success',
-        position: 'bottom-left',
-        autoClose: 5000,
-      });
-    }, 3000)
     document.querySelector('.loader').classList.remove('d-none')
     document.querySelector('.form').style.display = 'none'
+  } else if (submitted && !loading) {
+    document.querySelector('.loader').classList.add('d-none')
+    document.querySelector('.form').style.display = 'block'
+    toast('Published!', {
+      type: 'success',
+      position: 'top-left',
+      autoClose: 5000,
+    });
+    window.location.href = '/'
   }
+
+
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -98,19 +104,19 @@ const gArr = [
   const handleSubmit = (e) => {
     e.preventDefault();
     let a = document.getElementById("file").files[0];
-    if(!a.type.startsWith("image")){
+    if(!a?.type.startsWith("image")){
       setInvalid(true)
       return;
     } else {
       setInvalid(false)
     }
-    if(title && description && a && story && tag && genre){
+    if(title && description && a && content && tag && genre){
       dispatch(
         createBlog({
           title,
           description,
           photo: a,
-          story,
+          story:content,
           tag,
           genre,
         }))
@@ -154,16 +160,30 @@ const gArr = [
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <div className="mt-3">
-            <input id="file" type="file" onChange={handleImageUpload} />
+          <div className="mt-3 m">
+            <button type="button" className="btn btn-dark"
+            onClick={() => {
+              document.getElementById('file').click()
+            }}
+            >
+              <UploadFile /> A photo pls!
+            </button>
+            <input style={{display:'none'}} id="file" type="file" onChange={handleImageUpload} />
             {selectedImage && (
               <img className="image" src={selectedImage} alt="Uploaded" />
             )}
-            <textarea
+            {/* <textarea
               onChange={(e) => setStory(e.target.value)}
               className="mt-3 text-area"
               placeholder="Enter text here"
-            ></textarea>
+            ></textarea> */}
+
+            <JoditEditor
+            className="mt-2 mb-2 jodit"
+              ref={editor}
+              value={content}
+              onChange={newContent => setContent(newContent)}
+            />
           </div>
           <div className="row">
             <div className="col">

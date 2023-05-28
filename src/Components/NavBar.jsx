@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 import { fetchBlogsBySearch } from "../Store/slices/blogSlices";
 import { DarkMode, DarkModeOutlined, LightMode, Send } from "@mui/icons-material";
 import DotLoader from "./utils/DotLoader";
+import Dashboard from "./Feature/Dashboard";
 
 function NavBar() {
   const { isLoggedIn, loading } = useSelector((state) => state.user);
@@ -103,6 +104,7 @@ function NavBar() {
                     {currentUser_name}
                   </Popover.Header>
                   <Popover.Body>
+                    <div className="row">
                     <button
                       type="button"
                       className="btn btn-outline"
@@ -110,6 +112,8 @@ function NavBar() {
                     >
                       Logout
                     </button>
+                    </div>
+                    
                     <form enctype="multipart/form-data">
                       <input
                         onChange={(e) => {
@@ -121,13 +125,18 @@ function NavBar() {
                         name="photo"
                       ></input>
                     </form>
-                    <button
+                    <div><button
                       type="button"
                       className="btn btn-outline"
                       onClick={handleUpload}
                     >
                       upload
-                    </button>
+                    </button></div>
+                    <Link to="/settings">
+                      <button type="button" className="btn btn-outline">
+                        Settings
+                      </button>
+                    </Link>
                   </Popover.Body>
                 </Popover>
               }

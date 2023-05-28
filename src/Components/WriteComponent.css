@@ -21,4 +21,7 @@ img {
     border: 2px solid teal;
     color: teal;
   }
+  .jodit:hover {
+   box-shadow: 1px 2px 3px teal; 
+  }
   

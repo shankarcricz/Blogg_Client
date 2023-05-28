@@ -17,6 +17,10 @@ import FollowingBlogs from "./Components/FollowingBlogs";
 import FooterComponent from "./Components/FooterComponent";
 import MiniNav from "./Components/Feature/MiniNav";
 import SearchBlogs from "./Components/SearchBlogs";
+import Dashboard from "./Components/Feature/Dashboard";
+import Settings from "./Components/Settings";
+import ForgotPassword from "./Components/ForgotPassword";
+import MyBlogs from "./Components/MyBlogs";
 
 
 
@@ -30,7 +34,7 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
-        <NavBar />
+        <NavBar />  
         <div className="container">
           <Routes>
             <Route path="/blog/:id" element={<BlogComponent />}></Route>
@@ -38,6 +42,8 @@ const App = () => {
             <Route path="/following" element={<FollowingBlogs />}></Route>
             <Route path="/write" element={<WriteComponent />}></Route>
             <Route path="/search/:term" element={<SearchBlogs/>}></Route>
+            <Route path="/settings" element={<Settings/>}></Route>
+            <Route path="/myBlogs" element={<MyBlogs/>}></Route>
           </Routes>
         </div>
         <ToastContainer />

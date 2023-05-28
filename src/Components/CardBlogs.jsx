@@ -11,9 +11,11 @@ import { green } from "@mui/material/colors";
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import  ThumbUpIcon  from '@mui/icons-material/ThumbUp';
 import { Link } from "react-router-dom";
-import { FavoriteBorderOutlined, FavoriteRounded } from "@mui/icons-material";
+import { DeleteForeverOutlined, FavoriteBorderOutlined, FavoriteRounded } from "@mui/icons-material";
+import axios from "axios";
+import Cookies from "js-cookie";
 
-export default function CardBlogs({ blog }) {
+export default function CardBlogs({ blog, mine=false }) {
   const month = [
     "January",
     "February",
@@ -28,9 +30,23 @@ export default function CardBlogs({ blog }) {
     "November",
     "December",
   ];
+  const blog_ref = React.useRef()
+  const handleDeleteBlog = async () => {
+    try {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + Cookies.get('jwt')
+      let response = await axios.post('https://bloggserver.onrender.com/blogs/deleteBlogById/'+ blog?.id);
+      if(response.data.status === 'success') {
+        document.querySelector('.blogg')?.classList.add('d-none')
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  
   return (
-    <Card
-    sx={{ maxWidth: "100%" }} className="my-3">
+    <div className="blogg">
+<Card
+    sx={{ maxWidth: "100%" }} className="my-3 blogg" ref={blog_ref}>
       <div className="row card-header" style={{marginLeft:'-40px'}}>
         <div className="col"> <CardHeader
          className="text-muted "
@@ -39,16 +55,26 @@ export default function CardBlogs({ blog }) {
               sx={{ width: 38, height: 38 }}
               style={{border : '2px solid grey'}}
               alt={blog.createdUser?.name}
-              src={blog.createdUser?.photo}
+              src={mine? sessionStorage.getItem('currentUser_photo') : blog?.createdUser?.photo}
             />
           }
-          title={blog.createdUser?.name}
+          title={mine ? sessionStorage.getItem('currentUser_name') : blog.createdUser?.name}
           subheader={
             month[new Date(blog.createdAt).getMonth()] + ' - ' +
             new Date(blog.createdAt).getDay() + ' ' + new Date(blog.createdAt).getFullYear()
           }
         ></CardHeader></div>
-        <div className="mt-3 col"><Button style={{borderRadius:'50px', color : 'grey'}} variant="outlined" disabled size="small">{blog.genre}</Button></div>
+        <div className="mt-3 col">
+          <Button style={{borderRadius:'50px', color : 'grey'}} variant="outlined" disabled size="small">{blog.genre}</Button>
+         {
+          mine &&  <span onClick={handleDeleteBlog}>
+          <DeleteForeverOutlined style={{color:'red', cursor:'pointer'}}/>
+          </span>
+         }
+         
+         
+          </div>
+     
       </div>
       <div className="row">
         <div className="col-8">
@@ -59,6 +85,7 @@ export default function CardBlogs({ blog }) {
             <Typography variant="body2" color="text.secondary">
               {blog.description}
             </Typography>
+   
           </CardContent>
           <CardActions>  
           {
@@ -92,5 +119,7 @@ export default function CardBlogs({ blog }) {
         </div>
       </div>
     </Card>
+    </div>
+    
   );
 }

@@ -46,6 +46,16 @@ export const updateBlogById = createAsyncThunk("blog/update", async (obj) => {
   }
 });
 
+export const getMyBlogs = createAsyncThunk('myBlogs',async () => {
+  try {
+    axios.defaults.headers.common["Authorization"] =
+    "Bearer " + Cookies.get("jwt");
+    let response = await axios.post(BE_URL + "/blogs/getMyBlogs");
+    return response.data;
+  } catch(err) {
+    return err
+  }
+})
 
 export const fetchBlogs = createAsyncThunk("blogs", async () => {
   try {
@@ -82,12 +92,14 @@ const BlogSlice = createSlice({
   name: "blogs",
   initialState: {
     blogPosts: [],
+    myBlogs : [],
     blogPost: {},
     followPosts: [],
     loading: false,
     followingBlogs: [],
     SearchBlogs: [],
-    loadingS : false
+    loadingS : false,
+    submitted : false,
   },
 
   reducers: {
@@ -99,6 +111,18 @@ const BlogSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(getMyBlogs.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(getMyBlogs.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = "";
+      state.myBlogs = action.payload.data.blogs;
+    });
+
+
+
     builder.addCase(fetchBlogs.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -169,16 +193,20 @@ const BlogSlice = createSlice({
       state.loading = true;
       state.error = "";
       state.updated = false;
+      state.submitted = false;
     });
     builder.addCase(createBlog.fulfilled, (state, action) => {
       state.error = "";
       state.updated = true;
       state.loading = false;
+      state.submitted = true;
+
     });
     builder.addCase(createBlog.rejected, (state) => {
       state.loading = false;
       state.error = "error";
       state.updated = false;
+      state.submitted = false;
     });
   },
 });

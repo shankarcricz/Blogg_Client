@@ -59,9 +59,6 @@ function BlogComponent() {
 
   return (
     <>
-    
-      
-    
       {!blogPost ? (
         !Cookies.get('jwt') && <LoginChecker/>
       ) : loading ? (
@@ -132,7 +129,11 @@ function BlogComponent() {
             ></img>
           </div>
           <div className="row mt-3">
-            <h4>{blog?.story}</h4>
+            <h4 className="story">
+              {
+                document.querySelector('.story')?.insertAdjacentHTML('afterbegin', blog.story)
+              }
+            </h4>
           </div>
           <hr></hr>
           <div className="row">

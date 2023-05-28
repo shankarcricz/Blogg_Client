@@ -112,7 +112,9 @@ const UserSlice = createSlice({
     logout(state, action) {
       state.isLoggedIn = false;
       Cookies.set('jwt', '')
-      sessionStorage.setItem('currentUser', '')
+      sessionStorage.clear();
+      window.location.href = '/'
+   
     },
   },
   extraReducers: (builder) => {
