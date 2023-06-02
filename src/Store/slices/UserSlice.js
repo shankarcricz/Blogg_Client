@@ -114,7 +114,6 @@ const UserSlice = createSlice({
       Cookies.set('jwt', '')
       sessionStorage.clear();
       window.location.href = '/'
-   
     },
   },
   extraReducers: (builder) => {
