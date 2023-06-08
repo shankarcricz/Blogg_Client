@@ -7,6 +7,7 @@ import './Settings.css'
 import { Alert } from 'react-bootstrap';
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import { toast } from 'react-toastify'
 
 function ForgotPassword() {
 
@@ -21,10 +22,22 @@ function ForgotPassword() {
   const [tokenSent, setTokenSent] = useState(false)
   const [resetSuccess, setResetSuccess] = useState(false)
 
+
     const forgotPassword = async () => {
         try {
+            toast('Pls Wait!', {
+                type: 'success',
+                position: 'top-right',
+                autoClose: 3000,
+              });
             let response = await axios.post('https://bloggserver.onrender.com/users/forgotPassword', {email : securityEmail});
+            
             if(response.status === 200 && response.data.message === 'Token sent to email!') {
+                toast('Sent!', {
+                    type: 'success',
+                    position: 'top-right',
+                    autoClose: 3000,
+                  });
                 setTokenSent(true)
             } else {
                 setTokenSent(false)
@@ -34,14 +47,36 @@ function ForgotPassword() {
         }
     } 
     const resetPassword = async () => {
+
         try {
+            toast('Pls Wait!', {
+                type: 'success',
+                position: 'top-right',
+                autoClose: 3000,
+              });
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + Cookies.get('jwt')
             let response = await axios.patch('https://bloggserver.onrender.com/users/resetPassword/'+ token, {password, passwordConfirm : confirmPassword});
             if(response.status===201 && response.data.status === 'success' && response.data.token) {
+                toast('Sent!', {
+                    type: 'success',
+                    position: 'top-right',
+                    autoClose: 3000,
+                  });
                 Cookies.set('jwt', response.data.token)
                 setResetSuccess(true);
+            } else {
+                toast('Wrong Creds!', {
+                    type: 'danger',
+                    position: 'top-right',
+                    autoClose: 3000,
+                  });
             }
         } catch(e) {
+            toast('Wrong Creds!', {
+                type: 'warning',
+                position: 'top-right',
+                autoClose: 3000,
+              });
             console.log(e)
         }
     }
@@ -97,6 +132,7 @@ function ForgotPassword() {
 
   return (
     <>
+            <h3 className='row load d-none'>Loading...</h3>
     <div className='container'>
         <div className='card Security section mt-2'>
             <div className='card-header'>

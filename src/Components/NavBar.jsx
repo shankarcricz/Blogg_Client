@@ -58,11 +58,16 @@ function NavBar() {
             id="search"
             label="Search"
             variant="outlined"
+            onKeyUp={(e) => {
+              if(e.key === "Enter") {
+                document.getElementById('searchForTerm')?.click();
+              }
+            }}
          
           />
           {term && <CloseButton onClick={() => setTerm("")} />}
           <Link to={`/search/${term}`}>
-          <span style={{cursor: 'pointer'}} 
+          <span id="searchForTerm" style={{cursor: 'pointer'}} 
           ><Send/></span>
           </Link>
 
