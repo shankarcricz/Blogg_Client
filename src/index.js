@@ -11,6 +11,7 @@ root.render(
       <App />
       <div id="modal-root"></div>
       <div id="modal-root1"></div>
+  
   </Provider>
 );
 

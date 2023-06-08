@@ -42,7 +42,7 @@ const FollowingBlogs = React.memo(() => {
           
           !Cookies.get('jwt') ? <LoginChecker/> :
           <div className="row">
-           {followPosts.length === 0 && <>
+           {followPosts?.length === 0 && <>
             <div className='paper p-5'>Follow someone to see their feeds here!</div>
            </>}
           {followPosts?.map((blogObj) => {

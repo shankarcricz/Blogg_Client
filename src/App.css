@@ -4,6 +4,9 @@
 }
 
 
+
+
+
 * {
   font-family: 'Open Sans';
 }
@@ -31,6 +34,7 @@
 }
 .blogs {
   animation:fade 1s ease-in;
+  overflow: hidden;
   
 }
 @keyframes fade {
@@ -45,3 +49,33 @@
   position: fixed !important;
   top : 0;
 }
+@media screen and (min-width:900px) {
+
+  .blogg {
+    opacity: 0;
+    transform: translateX(250px);
+     transition: 250ms;
+     
+   }
+   .blogg.show{
+     transform: translateX(0);
+     opacity: 1;
+   }
+}
+@media screen and (max-width:900px) {
+
+  .blogg {
+    opacity: 0;
+     transition: 250ms;
+     
+   }
+   .blogg.show{
+     opacity: 1;
+   }
+}
+
+.bigCard {
+  box-shadow: 3px 2px 7px 0px rgba(155, 155, 155, 0.5);
+}
+
+

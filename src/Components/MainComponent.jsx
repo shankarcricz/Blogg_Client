@@ -12,6 +12,9 @@ import { Table } from "@mui/material";
 import RightMenu from './Feature/RightMenu';
 import Dashboard from "./Feature/Dashboard";
 
+
+
+
 function MainComponent() {
   const dispatch = useDispatch();
   const { blogPosts, error, loading } = useSelector((state) => state?.blogs);
@@ -28,6 +31,30 @@ function MainComponent() {
     }
     
   })
+  const parentRef = useRef(null);
+ useEffect(() => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      entry.target.classList.toggle('show', entry.isIntersecting);
+     
+    })
+  }, {
+    threshold:0.6,
+  });
+
+  let cards = parentRef?.current?.children;
+
+  if(!cards) return;
+  Array.from(cards)?.forEach(card => {
+    
+    observer.observe(card);
+  })
+  return () => {
+    observer.disconnect();
+  }
+
+ }, [parentRef.current])
+  
 
 
   return (
@@ -46,12 +73,15 @@ function MainComponent() {
             </>
           ) : (
             <>
-            <section className="col-lg-8 blogs">
+            <section className="blogs">
               <MiniNav/>
-              <div className="row">
+              <div className="row" ref={parentRef}>
                 {blogPosts.map((blogObj) => {
-                  return <CardBlogs key={blogObj.id} blog={blogObj} />; 
-                })}
+                  return (
+                    <div className="blogg">
+                  <CardBlogs  key={blogObj.id} blog={blogObj} />
+                  </div> 
+                )})}
               </div>
               
             </section>

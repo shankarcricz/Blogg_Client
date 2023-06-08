@@ -47,7 +47,9 @@ function NavBar() {
     <Navbar className="navbar">
       <Container>
         <Link to="/">
-        <Navbar.Brand className="brand" style={{fontWeight:'bold', fontFamily:'fantasy'}}>SOCIO</Navbar.Brand>
+        <Navbar.Brand className="brand" style={{fontWeight:'bold', fontFamily:'fantasy'}}>
+          <img alt="Logo" src='./SOCIO.png' style={{height:'50px', maxHeight:'60px'}}></img>
+          SOCIO</Navbar.Brand>
         </Link>
         
         <Navbar.Toggle />
