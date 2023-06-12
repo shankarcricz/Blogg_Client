@@ -24,7 +24,6 @@ import { AddFollow } from "../Store/slices/UserSlice";
 import MiniNav from "./Feature/MiniNav";
 import Cookies from "js-cookie";
 import LoginChecker from "./Feature/LoginChecker";
-import DOMPurify from "dompurify";
 
 
 function BlogComponent() {
