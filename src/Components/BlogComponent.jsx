@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addBlog, fetchBlogById, updateBlogById } from "../Store/slices/blogSlices";
 import { useParams } from "react-router";
+import parse from 'html-react-parser'
 import {
   ColorLens,
   CommentRounded,
@@ -23,6 +24,7 @@ import { AddFollow } from "../Store/slices/UserSlice";
 import MiniNav from "./Feature/MiniNav";
 import Cookies from "js-cookie";
 import LoginChecker from "./Feature/LoginChecker";
+import DOMPurify from "dompurify";
 
 
 function BlogComponent() {
@@ -34,7 +36,7 @@ function BlogComponent() {
   let isLiked = blog?.likers?.includes(sessionStorage.getItem("user_id"))
   const [liked, setLiked] = useState(isLiked)
  
-
+  
   useEffect(() => {
     dispatch(fetchBlogById(params.id));
     return () => {
@@ -131,8 +133,10 @@ function BlogComponent() {
           <div className="row mt-3">
             <h4 className="story">
               {
-                document.querySelector('.story')?.insertAdjacentHTML('afterbegin', blog.story)
-              }
+                parse(String(blog?.story))
+                // DOMPurify.sanitize(blog?.story)
+                // document.querySelector('.story')?.insertAdjacentHTML('afterbegin', blog?.story)
+              } 
             </h4>
           </div>
           <hr></hr>
